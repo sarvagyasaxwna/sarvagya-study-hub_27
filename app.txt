@@ -1,0 +1,6 @@
+Project: Sarvagya Study Hub
+Package: com.example
+Theme: Dark Cosmic Premium
+Features: AI Quiz Engine, Focus Pomodoro Timer, Progress Tracker
+Status: Ready for Remote Compiling Pipeline
+
