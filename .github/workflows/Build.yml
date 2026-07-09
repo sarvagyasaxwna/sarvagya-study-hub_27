@@ -6,19 +6,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Find and Unzip Code
-        run: |
-          find . -name "*.zip" -exec unzip -o {} \;
-          ls -la
-          
-      - name: Set up JDK 17
+      - name: set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           
-      - name: Build APK File
+      - name: Find and Unzip Code
         run: |
-          chmod +x gradlew || true
-          ./gradlew assembleDebug --no-daemon || true
+          unzip -o *.zip || true
+          # Agar zip ke andar ek aur folder hai toh uski files ko bahar nikalne ke liye
+          cp -r sarvagya-study-hub*/* . || true
+          cp -r studyhub*/* . || true
+          ls -la
+          
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+        
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug --stacktrace
+        
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SarvagyaStudyHub-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
           
